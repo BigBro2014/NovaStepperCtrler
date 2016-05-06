@@ -1,11 +1,5 @@
 # Dual Stepper Controller With Virtual Encoder For Arduino UNO
 
-### Hardware Connection:
-  - Pin11(OC2A) ---------- CLK_L
-  - Pin3 (OC2B) ---------- CLK_R
-  - LEFT_DIR_PIN ----- DIR_L
-  - RIGHT_DIR_PIN ---- DIR_R
-
 ### Usage:
 
 ```
@@ -18,11 +12,6 @@
 #define LEFT_DIR_PIN  4
 #define RIGHT_DIR_PIN 5
 
-// Connect motors:
-// Pin11(OC2A)    -- CLK_L
-// Pin3 (OC2B)    -- CLK_R
-// LEFT_DIR_PIN   -- DIR_L
-// RIGHT_DIR_PIN  -- DIR_R
 
 #define WHEEL_RADIUS 0.1f
 #define COUNTS_PER_REV 1600
