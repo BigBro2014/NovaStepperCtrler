@@ -1,0 +1,32 @@
+#######################################
+# Syntax Coloring Map For NovaStepperCtrler
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+NovaStepperCtrler	KEYWORD1	NovaStepperCtrler
+MOTOR_IDX	KEYWORD1
+MOTOR_DIR	KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+init KEYWORD2
+setVelocity	KEYWORD2
+getEncoder	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MOTOR_L	LITERAL1
+MOTOR_R	LITERAL1
+
+DIR_REV	LITERAL1
+DIR_FWD	LITERAL1
+
