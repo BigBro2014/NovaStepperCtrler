@@ -1,4 +1,4 @@
-# Dual Stepper Controller With Virtual Encoder For Arduino UNO
+# Dual Stepper Controller With Virtual Encoder For Arduino UNO/Leonardo
 
 ### Usage:
 
