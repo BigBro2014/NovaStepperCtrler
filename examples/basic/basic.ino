@@ -20,10 +20,10 @@ void setup() {
 
   Serial.begin(115200);
 
-  ctrler.init(LEFT_CLK_PIN, RIGHT_CLK_PIN, LEFT_DIR_PIN, RIGHT_DIR_PIN, WHEEL_RADIUS, COUNTS_PER_REV);
+  ctrler.init(LEFT_CLK_PIN, RIGHT_CLK_PIN, LEFT_DIR_PIN, RIGHT_DIR_PIN, WHEEL_RADIUS, COUNTS_PER_REV, NovaStepperCtrler::CLK_15625HZ);
   
   vel_left = 1.0f;
-  vel_right = 1.0f;
+  vel_right = 1.1f;
 }
 
 void loop() {
@@ -39,5 +39,5 @@ void loop() {
   
   Serial.print(encoders_left);
   Serial.print(",");
-  Serial.println(encoders_left);
+  Serial.println(encoders_right);
 }
