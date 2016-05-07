@@ -22,8 +22,8 @@ void setup() {
 
   ctrler.init(LEFT_CLK_PIN, RIGHT_CLK_PIN, LEFT_DIR_PIN, RIGHT_DIR_PIN, WHEEL_RADIUS, COUNTS_PER_REV);
   
-  vel_left = 0;
-  vel_right = 0;
+  vel_left = 1.0f;
+  vel_right = 1.0f;
 }
 
 void loop() {
@@ -32,11 +32,12 @@ void loop() {
   ctrler.setVelocity(NovaStepperCtrler::MOTOR_L, vel_left);
   ctrler.setVelocity(NovaStepperCtrler::MOTOR_R, vel_right);
   
-  delay(1000);
+  delay(20);
   
   uint16_t encoders_left = ctrler.getEncoder(NovaStepperCtrler::MOTOR_L);
   uint16_t encoders_right = ctrler.getEncoder(NovaStepperCtrler::MOTOR_R);
   
-  Serial.println(encoders_left);
+  Serial.print(encoders_left);
+  Serial.print(",");
   Serial.println(encoders_left);
 }
