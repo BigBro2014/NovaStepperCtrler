@@ -31,7 +31,7 @@ public:
 
   // Initialize
   // max_velocity = clk_rate / 2 / counts_per_rev * PI * wheel_radius
-  // min_velocity = clk_rate / 2 / counts_per_rev * PI * wheel_radius / 32768
+  // min_velocity = clk_rate / 2 / counts_per_rev * PI * wheel_radius / 65535
   void init(uint8_t left_clk_pin, uint8_t right_clk_pin, uint8_t left_dir_pin, uint8_t right_dir_pin, float wheel_radius, int16_t counts_per_rev, CLK_RATE clk_rate=CLK_15625HZ);
 
   // Set speed of specfic motor, vel>0.00001f as froward, vel<0.00001f as reverse, else stopped

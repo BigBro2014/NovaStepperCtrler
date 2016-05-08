@@ -39,7 +39,7 @@ ISR(TIMER3_COMPA_vect)
   if (left_counter >= left_toggle_value)
   {
     left_counter = 0;
-    left_clk_high = 1 - left_clk_high;
+    left_clk_high = !left_clk_high;
     
     ((NovaStepperCtrler*)CtrlerInstancePtr)->tick(NovaStepperCtrler::MOTOR_L, left_clk_high);
   }
@@ -47,7 +47,7 @@ ISR(TIMER3_COMPA_vect)
   if (right_counter >= right_toggle_value)
   {
     right_counter = 0;
-    right_clk_high = 1 - left_clk_high;
+    right_clk_high = !right_clk_high;
     
     ((NovaStepperCtrler*)CtrlerInstancePtr)->tick(NovaStepperCtrler::MOTOR_R, right_clk_high);
   }
@@ -62,6 +62,7 @@ NovaStepperCtrler::NovaStepperCtrler()
 void NovaStepperCtrler::init(uint8_t left_clk_pin, uint8_t right_clk_pin, uint8_t left_dir_pin, uint8_t right_dir_pin, float wheel_radius, int16_t counts_per_rev, CLK_RATE clk_rate)
 {
   // _clk_rate = clk_rate;
+  // Serial.print("clk_rate: "); Serial.println(clk_rate); 
 
   _clk_pin[MOTOR_L] = left_clk_pin;
   _clk_pin[MOTOR_R] = right_clk_pin;
@@ -93,12 +94,15 @@ void NovaStepperCtrler::init(uint8_t left_clk_pin, uint8_t right_clk_pin, uint8_
   {
   case CLK_62500HZ:
     OCR2A = 0;
+    break;
   
   case CLK_31250HZ:
     OCR2A = 1;
+    break;
   
   case CLK_15625HZ:
     OCR2A = 3;
+    break;
   }
 #elif defined (__AVR_ATmega32U4__)
   TCCR3A = 0;              
@@ -109,12 +113,15 @@ void NovaStepperCtrler::init(uint8_t left_clk_pin, uint8_t right_clk_pin, uint8_
   {
   case CLK_62500HZ:
     OCR3A = 0;
-  
+    break;
+    
   case CLK_31250HZ:
     OCR3A = 1;
+    break;
   
   case CLK_15625HZ:
     OCR3A = 3;
+    break;
   }
 #else
 #  error "NOT supported board"
@@ -179,15 +186,22 @@ void NovaStepperCtrler::setVelocity(MOTOR_IDX motor, float vel)
   {
     // Convert velocity in m/s to motor clock frequency
     freq = _counts_per_rev * vel / (PI * _wheel_radius);
+    // Serial.print("freq: "); Serial.println(freq);
 
     // counter value for toggle clk pin = compare match interrupt rate / (freq * 2) - 1
 #if defined (__AVR_ATmega328__) || defined (__AVR_ATmega328P__)
-    toggle_value = (int32_t)(F_CPU / PRESCALER / 2 / (1 + OCR2A) / freq + 0.5f) - 1;
+    // Serial.print("OCR2A: "); Serial.println(OCR2A);
+    // Serial.println((double)F_CPU / PRESCALER / 2 / (1 + OCR2A) / freq);
+    toggle_value = (int32_t)((double)F_CPU / PRESCALER / 2 / (1 + OCR2A) / freq + 0.5f) - 1;
 #elif defined (__AVR_ATmega32U4__)
-    toggle_value = (int32_t)(F_CPU / PRESCALER / 2 / (1 + OCR3A) / freq + 0.5f) - 1;
+    // Serial.print("OCR3A: "); Serial.println(OCR3A);
+    // Serial.println((double)F_CPU / PRESCALER / 2 / (1 + OCR3A) / freq);
+    toggle_value = (int32_t)((double)F_CPU / PRESCALER / 2 / (1 + OCR3A) / freq + 0.5f) - 1;
 #else
 #  error "NOT supported board"
 #endif
+    
+    // Serial.print("toggle_value: "); Serial.println(toggle_value);
 
     if (toggle_value < 0)
     {
