@@ -1,6 +1,6 @@
 # Dual Stepper Controller With Virtual Encoder For Arduino UNO/Leonardo
 
-### Brief:
+### Brief
 NovaStepperCtrler is a arduino based Dual Stepper Controller for robots that uses Timer2(or Timer3 for leanardo).
 
 It has virtual encoders for each motor, whose resolution eaquals to step count of full revolution.
@@ -17,10 +17,15 @@ It has virtual encoders for each motor, whose resolution eaquals to step count o
   c = clk_rate / 2 / counts_per_rev * PI * wheel_radius / v
 
   velocity resolution = dv/dc
+
                       = -(clk_rate / 2 / counts_per_rev * PI * wheel_radius) / (c * c)
+                      
                       = -v / c
+                      
                       = -v / (clk_rate / 2 / counts_per_rev * PI * wheel_radius / v)
+                      
                       = -v * v / (clk_rate / 2 / counts_per_rev * PI * wheel_radius)
+                      
                       = -2 * v * v * counts_per_rev / clk_rate / PI / wheel_radius
 
 
