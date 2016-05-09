@@ -24,6 +24,11 @@ void setup() {
 
   delay(10000);
 
+  pinMode(LEFT_CLK_PIN, OUTPUT);
+  pinMode(RIGHT_CLK_PIN, OUTPUT);
+  pinMode(LEFT_DIR_PIN, OUTPUT);
+  pinMode(RIGHT_DIR_PIN, OUTPUT);
+
   ctrler.init(LEFT_CLK_PIN, RIGHT_CLK_PIN, LEFT_DIR_PIN, RIGHT_DIR_PIN, WHEEL_RADIUS, COUNTS_PER_REV, NovaStepperCtrler::CLK_62500HZ);
 
   ctrler.setVelocity(NovaStepperCtrler::MOTOR_L, 0.7f);
@@ -32,20 +37,20 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
+
   delay(100);
-  
+
   curr_time = millis();
   uint16_t encoders_left = ctrler.getEncoder(NovaStepperCtrler::MOTOR_L);
   uint16_t encoders_right = ctrler.getEncoder(NovaStepperCtrler::MOTOR_R);
 
   double diff;
-  
+
   Serial.print("encoder: ");
   Serial.print(encoders_left);
   Serial.print(", ");
   Serial.println(encoders_right);
-  
+
   Serial.print("real velocity: ");
 
   diff = (int32_t)encoders_left - last_encoders_left;
@@ -59,7 +64,7 @@ void loop() {
   if (diff < 0)
     diff += COUNTS_PER_REV;
   Serial.println(diff / COUNTS_PER_REV * PI * WHEEL_RADIUS * 1000 / (curr_time - last_time), 4);
-  
+
   last_time = curr_time;
   last_encoders_left = encoders_left;
   last_encoders_right = encoders_right;
